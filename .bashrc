@@ -1,0 +1,5 @@
+DEBEMAIL="vinaykeshava@disroot.org"
+DEBFULLNAME="Vinay Keshava"
+export DEBEMAIL DEBFULLNAME
+export QUILT_PATCHES=debian/patches
+export QUILT_REFRESH_ARGS="-p ab --no-timestamps --no-index" 
