@@ -131,3 +131,15 @@ drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration
 dpkg --contents
 
 
+
+Ruby gem layout
+https://sources.debian.org/src/ruby-sentry-ruby-core/5.3.0-2/debian/patches/remove-git-in-gemspec.patch/
+https://sources.debian.org/src/ruby-sentry-ruby-core/5.3.0-2/sentry-ruby-core.gemspec/
+https://raphaelhertzog.com/2012/08/08/how-to-use-quilt-to-manage-patches-in-debian-packages/
+https://sources.debian.org/src/ruby-invisible-captcha/1.1.0-5/debian/patches/remove-git-in-gemspec.patch/
+https://sources.debian.org/src/ruby-ace-rails-ap/4.1.1-1.1/debian/patches/remove-git-in-gemspec.patch/
+https://sources.debian.org/src/ruby-jekyll-paginate/1.1.0-3/debian/patches/0001-Add-patch-Replace-git-execution-from-gemspec.patch/?hl=19#L19
+https://sources.debian.org/src/ruby-sentry-ruby-core/5.3.0-2/debian/patches/remove-git-in-gemspec.patch/
+https://sources.debian.org/src/ruby-childprocess/4.1.0-1/debian/patches/0001-do-not-use-git-in-gemspec.patch/?hl=17#L17
+https://sources.debian.org/src/ruby-ace-rails-ap/4.1.1-1.1/debian/patches/remove-git-in-gemspec.patch/?hl=8#L8
+
