@@ -3,7 +3,7 @@
 
 quilt new remove-git-in-gemspec.patch
 quilt add redis-actionpack.gemspec
-quilt edit remove-git-in-gemspec.patch
+quilt edit redis-actionpack.gemspec
 quilt refresh
 
 
