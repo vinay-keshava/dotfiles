@@ -1,0 +1,145 @@
+
+
+
+quilt new remove-git-in-gemspec.patch
+quilt add redis-actionpack.gemspec
+quilt edit redis-actionpack.gemspec
+quilt refresh
+
+
+
+  s.files         = `git ls-files`.split("\n")
+  			Dir["**/*"]
+  			
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
++  s.test_files    = Dir['{test,spec,features}/*']
+
+-  s.test_files    = `git ls-files -- spec/*`.split("\n")
++  s.test_files    = Dir['spec/*']
+
+
+
+-  spec.files         = `git ls-files`.split($/)
++  spec.files         = Dir.glob("**/*").select {|v| v !~ /^debian/}
+
+
+-  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
++  spec.executables   = spec.files.select {|v| v =~ /^bin\//}.map { |f| File.basename(f) }
+
+-  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
++  testfiles          = spec.files.select {|v| v =~ /^(test|spec|features)/}
+
+
+
+**********************after patch ********************************
+
+vinay@falcon ~/s/t/r/ruby-redis-actionpack (master)> dpkg --contents ../ruby-redis-actionpack_5.3.0-1_all.deb
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/doc/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/doc/ruby-redis-actionpack/
+-rw-r--r-- root/root      2606 2022-08-30 22:01 ./usr/share/doc/ruby-redis-actionpack/README.md
+-rw-r--r-- root/root       956 2022-08-30 22:01 ./usr/share/doc/ruby-redis-actionpack/changelog.Debian.gz
+-rw-r--r-- root/root      2087 2022-08-30 22:00 ./usr/share/doc/ruby-redis-actionpack/changelog.gz
+-rw-r--r-- root/root      1476 2022-08-30 22:00 ./usr/share/doc/ruby-redis-actionpack/copyright
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/action_dispatch/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/action_dispatch/middleware/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/action_dispatch/middleware/session/
+-rw-r--r-- root/root      1272 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/action_dispatch/middleware/session/redis_store.rb
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/redis/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/redis/actionpack/
+-rw-r--r-- root/root        64 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/redis/actionpack/version.rb
+-rw-r--r-- root/root       136 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/redis-actionpack.rb
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/specifications/
+-rw-r--r-- root/root      1408 2022-08-30 22:01 ./usr/share/rubygems-integration/all/specifications/redis-actionpack-5.3.0.gemspec
+
+
+
+
+
+*****************************Before patch ******************
+
+
+
+vinay@falcon ~/s/t/r/ruby-redis-actionpack (master) [25]> dpkg --contents ../ruby-redis-actionpack_5.3.0-1_all.deb
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/bin/
+-rwxr-xr-x root/root        80 2022-08-30 22:01 ./usr/bin/bundler-version-options.rb
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/lib/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/lib/ruby/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/lib/ruby/vendor_ruby/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/lib/ruby/vendor_ruby/action_dispatch/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/lib/ruby/vendor_ruby/action_dispatch/middleware/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/lib/ruby/vendor_ruby/action_dispatch/middleware/session/
+-rw-r--r-- root/root      1272 2022-08-30 22:01 ./usr/lib/ruby/vendor_ruby/action_dispatch/middleware/session/redis_store.rb
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/lib/ruby/vendor_ruby/redis/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/lib/ruby/vendor_ruby/redis/actionpack/
+-rw-r--r-- root/root        64 2022-08-30 22:01 ./usr/lib/ruby/vendor_ruby/redis/actionpack/version.rb
+-rw-r--r-- root/root       136 2022-08-30 22:01 ./usr/lib/ruby/vendor_ruby/redis-actionpack.rb
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/doc/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/doc/ruby-redis-actionpack/
+-rw-r--r-- root/root      2606 2022-08-30 22:01 ./usr/share/doc/ruby-redis-actionpack/README.md
+-rw-r--r-- root/root       956 2022-08-30 22:01 ./usr/share/doc/ruby-redis-actionpack/changelog.Debian.gz
+-rw-r--r-- root/root      2087 2022-08-30 22:00 ./usr/share/doc/ruby-redis-actionpack/changelog.gz
+-rw-r--r-- root/root      1476 2022-08-30 22:00 ./usr/share/doc/ruby-redis-actionpack/copyright
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/specifications/
+-rw-r--r-- root/root      3838 2022-08-30 22:01 ./usr/share/rubygems-integration/all/specifications/redis-actionpack-5.3.0.gemspec
+
+
+
+
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/doc/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/doc/ruby-redis-actionpack/
+-rw-r--r-- root/root      2606 2022-08-30 22:01 ./usr/share/doc/ruby-redis-actionpack/README.md
+-rw-r--r-- root/root       956 2022-08-30 22:01 ./usr/share/doc/ruby-redis-actionpack/changelog.Debian.gz
+-rw-r--r-- root/root      2087 2022-08-30 22:00 ./usr/share/doc/ruby-redis-actionpack/changelog.gz
+-rw-r--r-- root/root      1476 2022-08-30 22:00 ./usr/share/doc/ruby-redis-actionpack/copyright
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/
+-rw-r--r-- root/root       136 2022-08-30 22:01 ./usr/share/rubygems-integration/all/gems/redis-actionpack-5.3.0/lib/redis-actionpack.rb
+drwxr-xr-x root/root         0 2022-08-30 22:01 ./usr/share/rubygems-integration/all/specifications/
+-rw-r--r-- root/root      1408 2022-08-30 22:01 ./usr/share/rubygems-integration/all/specifications/redis-actionpack-5.3.0.gemspec
+
+
+
+
+
+-  s.files         = `git ls-files`.split("\n")
+-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
++  s.files         = Dir["lib/**/*"]
++  s.test_files    = Dir['{test,spec,features}/*']
+
+
+
+
+dpkg --contents
+
+
+
+Ruby gem layout
+https://sources.debian.org/src/ruby-sentry-ruby-core/5.3.0-2/debian/patches/remove-git-in-gemspec.patch/
+https://sources.debian.org/src/ruby-sentry-ruby-core/5.3.0-2/sentry-ruby-core.gemspec/
+https://raphaelhertzog.com/2012/08/08/how-to-use-quilt-to-manage-patches-in-debian-packages/
+https://sources.debian.org/src/ruby-invisible-captcha/1.1.0-5/debian/patches/remove-git-in-gemspec.patch/
+https://sources.debian.org/src/ruby-ace-rails-ap/4.1.1-1.1/debian/patches/remove-git-in-gemspec.patch/
+https://sources.debian.org/src/ruby-jekyll-paginate/1.1.0-3/debian/patches/0001-Add-patch-Replace-git-execution-from-gemspec.patch/?hl=19#L19
+https://sources.debian.org/src/ruby-sentry-ruby-core/5.3.0-2/debian/patches/remove-git-in-gemspec.patch/
+https://sources.debian.org/src/ruby-childprocess/4.1.0-1/debian/patches/0001-do-not-use-git-in-gemspec.patch/?hl=17#L17
+https://sources.debian.org/src/ruby-ace-rails-ap/4.1.1-1.1/debian/patches/remove-git-in-gemspec.patch/?hl=8#L8
+
