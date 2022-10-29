@@ -1,0 +1,5 @@
+#if gem2deb fails 
+$ gem fetch gemName 
+
+$ gem2deb gemName.gem
+
