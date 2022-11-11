@@ -1,0 +1,1 @@
+sudo lxc-create -n gitlab -t download -- --dist debian -r bullseye
