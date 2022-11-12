@@ -1,0 +1,17 @@
+vinay@falcon ~> sudo lxc-ls -f
+NAME       STATE   AUTOSTART GROUPS IPV4      IPV6 UNPRIVILEGED 
+debian-sid RUNNING 0         -      10.0.3.99 -    false        
+gitlab     STOPPED 0         -      -         -    false      
+
+
+Check the 
+
+vinay@falcon ~> scp /home/vinay/.ssh/id_ed25519* vinay@10.0.3.99:/home/vinay/.ssh/
+The authenticity of host '10.0.3.99 (10.0.3.99)' can't be established.
+ED25519 key fingerprint is .
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '10.0.3.99' (ED25519) to the list of known hosts.
+vinay@10.0.3.99's password: 
+id_ed25519                                                                                                                                                  100%  444     1.1MB/s   00:00    
+id_ed25519.pub                                                                                                                                              100%   94   560.3KB/s   00:00    
